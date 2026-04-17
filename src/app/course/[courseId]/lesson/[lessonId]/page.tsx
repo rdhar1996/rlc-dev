@@ -49,7 +49,6 @@ export default function LessonViewerPage() {
       setData(result);
       setCompleted(result.status === "completed");
 
-      // Load saved worksheet responses
       const saved: Record<number, string> = {};
       result.blocks.forEach((block: Block) => {
         if (block.block_type === "worksheet" && block.saved_response) {
@@ -65,10 +64,7 @@ export default function LessonViewerPage() {
 
   const saveWorksheet = useCallback(
     (blockId: number, value: string) => {
-      // Clear existing timer
       if (saveTimers[blockId]) clearTimeout(saveTimers[blockId]);
-
-      // Set new timer for auto-save after 1 second of no typing
       const timer = setTimeout(async () => {
         await fetch("/api/worksheet-save", {
           method: "POST",
@@ -76,7 +72,6 @@ export default function LessonViewerPage() {
           body: JSON.stringify({ lesson_block_id: blockId, response_text: value }),
         });
       }, 1000);
-
       setSaveTimers((prev) => ({ ...prev, [blockId]: timer }));
     },
     [saveTimers]
@@ -90,20 +85,13 @@ export default function LessonViewerPage() {
   const handleComplete = async () => {
     if (!data) return;
     setCompleting(true);
-
     await fetch("/api/lesson-complete", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        lesson_id: data.lesson.id,
-        course_id: data.section.course_id,
-      }),
+      body: JSON.stringify({ lesson_id: data.lesson.id, course_id: data.section.course_id }),
     });
-
     setCompleted(true);
     setCompleting(false);
-
-    // Auto-navigate to next lesson after a brief pause
     if (data.next_lesson) {
       setTimeout(() => {
         router.push(`/course/${courseId}/lesson/${data.next_lesson!.id}`);
@@ -113,7 +101,7 @@ export default function LessonViewerPage() {
 
   if (loading) {
     return (
-      <main className="flex min-h-screen items-center justify-center bg-[#f8f9fa]">
+      <main className="flex min-h-screen items-center justify-center" style={{ background: "#F5F3EE" }}>
         <div className="text-lg font-semibold text-[#1e3a5f]">Loading lesson...</div>
       </main>
     );
@@ -126,15 +114,21 @@ export default function LessonViewerPage() {
     : 0;
 
   return (
-    <main className="min-h-screen bg-[#f8f9fa]">
-      <header className="bg-[#1e3a5f] px-8 py-4 shadow-md">
+    <main className="min-h-screen" style={{ background: "#F5F3EE" }}>
+      {/* Header */}
+      <header className="bg-[#1e3a5f] px-8 py-4" style={{ boxShadow: "0 4px 16px rgba(30,58,95,0.2)" }}>
         <div className="mx-auto flex max-w-3xl items-center justify-between">
-          <div>
-            <div className="text-2xl font-extrabold text-white">RLC</div>
+          <div className="flex items-center gap-3 text-sm text-blue-200">
+            <span className="font-medium text-[#FAC775]">{data.course.course_title}</span>
+            <span className="text-blue-300/50">›</span>
+            <span>Section {data.section.section_number}</span>
+            <span className="text-blue-300/50">›</span>
+            <span className="font-medium text-white">Lesson {data.current_index + 1} of {data.total_lessons}</span>
           </div>
           <button
             onClick={() => router.push(`/course/${courseId}`)}
-            className="rounded-md bg-[#378add] px-4 py-2 text-sm font-semibold text-white"
+            className="rounded-lg px-4 py-2 text-sm font-medium text-white"
+            style={{ background: "rgba(255,255,255,0.12)" }}
           >
             Back to Course
           </button>
@@ -142,92 +136,94 @@ export default function LessonViewerPage() {
       </header>
 
       <div className="mx-auto max-w-3xl px-8 py-8">
-        {/* Breadcrumb */}
-        <div className="mb-4 flex items-center gap-2 text-sm text-gray-500">
-          <span>{data.course.course_title}</span>
-          <span className="text-gray-300">›</span>
-          <span>Section {data.section.section_number}</span>
-          <span className="text-gray-300">›</span>
-          <span className="font-medium text-[#1e3a5f]">
-            Lesson {data.current_index + 1} of {data.total_lessons}
-          </span>
-        </div>
-
-        {/* Progress bar */}
-        <div className="mb-8 h-1.5 rounded-full bg-gray-200">
-          <div
-            className="h-1.5 rounded-full bg-[#BA7517] transition-all"
-            style={{ width: `${progressPercent}%` }}
-          />
-        </div>
-
-        {/* Lesson title */}
-        <h1 className="mb-2 text-3xl font-bold text-[#1e3a5f]">
-          {data.lesson.title}
-        </h1>
-        <p className="mb-8 text-sm text-gray-400">
-          About {data.lesson.estimated_minutes} minutes
-        </p>
-
-        {/* Lesson blocks */}
-        <div className="space-y-5">
-          {data.blocks.map((block) => (
-            <LessonBlock
-              key={block.id}
-              block={block}
-              worksheetValue={worksheetValues[block.id] || ""}
-              onWorksheetChange={handleWorksheetChange}
-            />
-          ))}
-        </div>
-
-        {/* Mark Complete + Navigation */}
-        <div className="mt-12 border-t border-gray-200 pt-8">
-          {!completed ? (
-            <button
-              onClick={handleComplete}
-              disabled={completing}
-              className="mb-8 w-full rounded-md bg-[#BA7517] py-4 text-lg font-bold text-white disabled:opacity-60"
-            >
-              {completing ? "Saving..." : "Mark Complete"}
-            </button>
-          ) : (
-            <div className="mb-8 rounded-lg bg-[#ecfdf5] px-6 py-4 text-center text-lg font-bold text-[#0f6e56]">
-              ✓ Lesson Complete
+        {/* Main content card */}
+        <div
+          className="rounded-2xl bg-white p-8 md:p-10"
+          style={{ boxShadow: "0 2px 12px rgba(0,0,0,0.06), 0 1px 4px rgba(0,0,0,0.03)" }}
+        >
+          {/* Progress bar */}
+          <div className="mb-6 flex items-center gap-3">
+            <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-[#EAE7E0]">
+              <div
+                className="h-1.5 rounded-full transition-all"
+                style={{ width: `${progressPercent}%`, background: "linear-gradient(90deg, #FAC775, #EF9F27)" }}
+              />
             </div>
-          )}
+            <span className="text-xs text-[#888780]">{progressPercent}%</span>
+          </div>
 
-          <div className="flex items-center justify-between">
-            {data.prev_lesson ? (
+          {/* Title */}
+          <h1 className="mb-1.5 text-3xl font-bold text-[#1e3a5f]">{data.lesson.title}</h1>
+          <p className="mb-8 text-sm text-[#B4B2A9]">About {data.lesson.estimated_minutes} minutes</p>
+
+          {/* Blocks */}
+          <div className="space-y-5">
+            {data.blocks.map((block) => (
+              <LessonBlock
+                key={block.id}
+                block={block}
+                worksheetValue={worksheetValues[block.id] || ""}
+                onWorksheetChange={handleWorksheetChange}
+              />
+            ))}
+          </div>
+
+          {/* Mark Complete */}
+          <div className="mt-10 border-t border-[#EAE7E0] pt-8">
+            {!completed ? (
               <button
-                onClick={() => router.push(`/course/${courseId}/lesson/${data.prev_lesson!.id}`)}
-                className="flex items-center gap-2 rounded-md border border-gray-300 px-5 py-3 text-sm font-medium text-[#1e3a5f]"
+                onClick={handleComplete}
+                disabled={completing}
+                className="mb-6 w-full rounded-xl py-4 text-lg font-bold text-white disabled:opacity-60"
+                style={{ background: "#BA7517", boxShadow: "0 4px 12px rgba(186,117,23,0.3)" }}
               >
-                ← Previous
+                {completing ? "Saving..." : "Mark Complete"}
               </button>
             ) : (
-              <div />
+              <div
+                className="mb-6 rounded-xl px-6 py-4 text-center text-lg font-bold text-[#0f6e56]"
+                style={{ background: "#E1F5EE", boxShadow: "0 2px 8px rgba(15,110,86,0.08)" }}
+              >
+                Lesson Complete
+              </div>
             )}
 
-            <span className="text-sm text-gray-400">
-              Lesson {data.current_index + 1} of {data.total_lessons}
-            </span>
+            {/* Navigation */}
+            <div className="flex items-center justify-between">
+              {data.prev_lesson ? (
+                <button
+                  onClick={() => router.push(`/course/${courseId}/lesson/${data.prev_lesson!.id}`)}
+                  className="rounded-xl border border-[#D3D1C7] bg-white px-5 py-3 text-sm font-medium text-[#1e3a5f]"
+                  style={{ boxShadow: "0 1px 4px rgba(0,0,0,0.04)" }}
+                >
+                  Previous
+                </button>
+              ) : (
+                <div />
+              )}
 
-            {data.next_lesson ? (
-              <button
-                onClick={() => router.push(`/course/${courseId}/lesson/${data.next_lesson!.id}`)}
-                className="flex items-center gap-2 rounded-md bg-[#BA7517] px-5 py-3 text-sm font-bold text-white"
-              >
-                Next →
-              </button>
-            ) : (
-              <button
-                onClick={() => router.push(`/course/${courseId}`)}
-                className="flex items-center gap-2 rounded-md bg-[#0f6e56] px-5 py-3 text-sm font-bold text-white"
-              >
-                Back to Course
-              </button>
-            )}
+              <span className="text-sm text-[#B4B2A9]">
+                Lesson {data.current_index + 1} of {data.total_lessons}
+              </span>
+
+              {data.next_lesson ? (
+                <button
+                  onClick={() => router.push(`/course/${courseId}/lesson/${data.next_lesson!.id}`)}
+                  className="rounded-xl px-6 py-3 text-sm font-bold text-white"
+                  style={{ background: "#BA7517", boxShadow: "0 2px 8px rgba(186,117,23,0.25)" }}
+                >
+                  Next Lesson
+                </button>
+              ) : (
+                <button
+                  onClick={() => router.push(`/course/${courseId}`)}
+                  className="rounded-xl px-6 py-3 text-sm font-bold text-white"
+                  style={{ background: "#0f6e56", boxShadow: "0 2px 8px rgba(15,110,86,0.25)" }}
+                >
+                  Back to Course
+                </button>
+              )}
+            </div>
           </div>
         </div>
       </div>
@@ -247,7 +243,7 @@ function LessonBlock({
   switch (block.block_type) {
     case "paragraph":
       return (
-        <p className="text-lg leading-8 text-gray-800">{block.content}</p>
+        <p className="text-lg leading-8 text-[#444441]">{block.content}</p>
       );
 
     case "heading":
@@ -257,9 +253,12 @@ function LessonBlock({
 
     case "key_point":
       return (
-        <div className="rounded-none border-l-4 border-[#BA7517] bg-[#FAEEDA] px-6 py-5">
-          <div className="mb-2 text-xs font-bold uppercase tracking-wider text-[#633806]">
-            Key Point
+        <div
+          className="rounded-r-xl border-l-4 border-[#BA7517] bg-[#FAEEDA] px-6 py-5"
+          style={{ boxShadow: "0 2px 8px rgba(186,117,23,0.1)" }}
+        >
+          <div className="mb-2 text-[11px] font-bold uppercase tracking-widest text-[#854F0B]">
+            Key point
           </div>
           <p className="text-base leading-7 text-[#412402]">{block.content}</p>
         </div>
@@ -267,22 +266,28 @@ function LessonBlock({
 
     case "did_you_know":
       return (
-        <div className="rounded-lg bg-[#E6F1FB] px-6 py-5">
-          <div className="mb-2 text-xs font-bold uppercase tracking-wider text-[#0C447C]">
-            Did You Know?
+        <div
+          className="rounded-xl border border-[#9FE1CB] bg-[#F7FFFB] px-6 py-5"
+          style={{ boxShadow: "0 2px 8px rgba(15,110,86,0.06)" }}
+        >
+          <div className="mb-2 text-[11px] font-bold uppercase tracking-widest text-[#085041]">
+            Did you know?
           </div>
-          <p className="text-base leading-7 text-[#042C53]">{block.content}</p>
+          <p className="text-base leading-7 text-[#04342C]">{block.content}</p>
         </div>
       );
 
     case "story":
       return (
-        <div className="rounded-lg bg-gray-50 px-6 py-5">
-          <div className="mb-2 text-xs font-bold uppercase tracking-wider text-gray-500">
-            A Story
+        <div
+          className="rounded-xl border border-[#D3D1C7] bg-[#FAFAF8] px-6 py-5"
+          style={{ boxShadow: "0 1px 6px rgba(0,0,0,0.04)" }}
+        >
+          <div className="mb-3 text-[11px] font-bold uppercase tracking-widest text-[#5F5E5A]">
+            A story
           </div>
           {block.content.split("\n\n").map((paragraph, i) => (
-            <p key={i} className={`text-base leading-7 text-gray-700 ${i > 0 ? "mt-3" : ""}`}>
+            <p key={i} className={`text-base italic leading-7 text-[#444441] ${i > 0 ? "mt-3" : ""}`}>
               {paragraph}
             </p>
           ))}
@@ -291,9 +296,12 @@ function LessonBlock({
 
     case "think_about_it":
       return (
-        <div className="rounded-lg bg-[#EEEDFE] px-6 py-5">
-          <div className="mb-2 text-xs font-bold uppercase tracking-wider text-[#3C3489]">
-            Think About It
+        <div
+          className="rounded-xl border border-[#CECBF6] bg-[#EEEDFE] px-6 py-5"
+          style={{ boxShadow: "0 2px 8px rgba(83,74,183,0.06)" }}
+        >
+          <div className="mb-2 text-[11px] font-bold uppercase tracking-widest text-[#3C3489]">
+            Think about it
           </div>
           <p className="text-base leading-7 text-[#26215C]">{block.content}</p>
         </div>
@@ -301,37 +309,47 @@ function LessonBlock({
 
     case "worksheet":
       return (
-        <div className="rounded-lg border-2 border-[#EF9F27] bg-white px-6 py-5">
+        <div
+          className="rounded-2xl border-2 border-[#EF9F27] bg-[#FFF8F0] p-6"
+          style={{ boxShadow: "0 3px 12px rgba(186,117,23,0.1)" }}
+        >
           <div className="mb-3 flex items-center gap-3">
-            <div className="flex h-7 w-7 items-center justify-center rounded-full bg-[#FAEEDA] text-sm text-[#854F0B]">
-              ✎
+            <div
+              className="flex h-8 w-8 items-center justify-center rounded-full bg-[#FAEEDA]"
+              style={{ boxShadow: "0 1px 4px rgba(186,117,23,0.15)" }}
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#854F0B" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20h9" /><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" /></svg>
             </div>
-            <div className="text-xs font-bold uppercase tracking-wider text-[#854F0B]">
-              Worksheet Activity
+            <div className="text-xs font-bold uppercase tracking-widest text-[#854F0B]">
+              Worksheet activity
             </div>
           </div>
-          <p className="mb-2 text-base font-medium text-[#1e3a5f]">{block.content}</p>
+          <p className="mb-1 text-base font-medium text-[#1e3a5f]">{block.content}</p>
           {block.prompt ? (
-            block.prompt.split("\n").map((promptLine, i) => (
-              <p key={i} className="mb-1 text-sm text-gray-500">{promptLine}</p>
+            block.prompt.split("\n").map((line, i) => (
+              <p key={i} className="mb-1 text-sm text-[#888780]">{line}</p>
             ))
           ) : null}
           <textarea
             value={worksheetValue}
             onChange={(e) => onWorksheetChange(block.id, e.target.value)}
             placeholder="Type your answer here..."
-            className="mt-3 w-full rounded-md border border-gray-300 bg-white px-4 py-3 text-base text-gray-800 placeholder-gray-400 outline-none focus:border-[#BA7517] focus:ring-1 focus:ring-[#BA7517]"
+            className="mt-3 w-full rounded-xl border-2 border-[#EF9F27] bg-white px-4 py-3 text-base text-[#444441] placeholder-[#B4B2A9] outline-none focus:border-[#BA7517]"
+            style={{ boxShadow: "inset 0 2px 4px rgba(0,0,0,0.03)" }}
             rows={4}
           />
-          <p className="mt-2 text-xs text-gray-400">Your answer saves automatically</p>
+          <p className="mt-2 text-[11px] text-[#B4B2A9]">Your answer saves automatically</p>
         </div>
       );
 
     case "quick_check":
       return (
-        <div className="rounded-lg bg-[#E1F5EE] px-6 py-5">
-          <div className="mb-2 text-xs font-bold uppercase tracking-wider text-[#085041]">
-            Quick Check
+        <div
+          className="rounded-xl border border-[#9FE1CB] bg-[#E1F5EE] px-6 py-5"
+          style={{ boxShadow: "0 2px 8px rgba(15,110,86,0.06)" }}
+        >
+          <div className="mb-2 text-[11px] font-bold uppercase tracking-widest text-[#085041]">
+            Quick check
           </div>
           {block.content.split("\n").map((line, i) => (
             <p key={i} className="text-base leading-7 text-[#04342C]">{line}</p>
@@ -341,7 +359,7 @@ function LessonBlock({
 
     default:
       return (
-        <p className="text-lg leading-8 text-gray-800">{block.content}</p>
+        <p className="text-lg leading-8 text-[#444441]">{block.content}</p>
       );
   }
 }
