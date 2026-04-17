@@ -46,6 +46,7 @@ type Course = {
   course_title: string;
   tier?: "Tier 1" | "Tier 2";
   display_order?: number | null;
+    short_description?: string | null;
 };
 
 type DashboardResponse = {
@@ -62,46 +63,6 @@ function fmtDate(value: string | null | undefined) {
   const d = new Date(value);
   if (Number.isNaN(d.getTime())) return "—";
   return d.toLocaleDateString();
-}
-
-function courseDescription(title: string) {
-  const map: Record<string, string> = {
-    "How to Write a Resume": "Learn how to build a clear, job-ready resume.",
-    "Job Interview Prep": "Practice answering common interview questions with confidence.",
-    "Email Basics": "Understand how to write, send, and organize emails.",
-    "Digital Job Applications": "Learn how to complete online job applications.",
-    "How to Use Search Engines": "Build skills to find useful information online.",
-    "Talking About Yourself in 30 Seconds": "Create a short, strong personal introduction.",
-    "Microsoft Word 101": "Learn the basics of using Microsoft Word documents.",
-    "How to Make a Budget": "Build a simple budget to manage money wisely.",
-    "What Credit Is and How to Build It": "Understand credit and how to improve it over time.",
-    "How to Spot Scams": "Learn warning signs of fraud and common scams.",
-    "How to Save Money, Even on a Tight Budget": "Use practical ways to save with limited income.",
-    "How to Handle Stress": "Practice healthy ways to manage stress every day.",
-    "How to Control Anger Without Violence": "Learn safe techniques to manage anger.",
-    "Controlling Negative Thoughts": "Build habits to challenge harmful thought patterns.",
-    "Building Confidence and Self-Worth": "Strengthen self-belief and healthy self-talk.",
-    "Staying Mentally Strong in the Hole": "Use coping tools for isolation and difficult conditions.",
-    "What to Expect at Parole or Probation": "Prepare for supervision requirements after release.",
-    "Finding Housing After Release": "Learn practical steps to secure stable housing.",
-    "Getting a Driver’s License or ID": "Understand the steps to get key identification documents.",
-    "Food Stamps, Medicaid, and Assistance": "Learn how to apply for basic support programs.",
-    "Basic English": "Build core English reading, writing, and speaking skills.",
-    "Basic Spanish": "Learn basic Spanish for everyday communication.",
-    "Intro to Plumbing": "Get familiar with basic plumbing tools and concepts.",
-    "Basics of Auto Repair": "Learn foundational vehicle maintenance skills.",
-    "Intro to Carpentry": "Understand basic carpentry tools and safety.",
-    "Landscaping and Lawncare Basics": "Learn entry-level landscaping and lawncare skills.",
-    "Parenting from Inside": "Strengthen parenting skills while incarcerated.",
-    "Apologies and Making Amends": "Learn how to rebuild trust through accountability.",
-    "Listening to Understand": "Practice active listening in real conversations.",
-    "Rebuilding Broken Friendships": "Learn healthy ways to reconnect and repair relationships.",
-    "Nutrition on a Budget": "Choose affordable foods that support better health.",
-    "Daily Hygiene Basics": "Build simple habits for daily personal care.",
-    "Dental Care on Your Own": "Learn easy ways to protect dental health.",
-  };
-
-  return map[title] || "Build practical skills that support reentry and daily life.";
 }
 
 function displayStatus(progressStatus: string, progressPercent: number) {
@@ -318,7 +279,7 @@ export default function ResidentDashboardPage() {
           id: course.id,
           title: course.course_title,
           tier: course.tier || "—",
-          description: courseDescription(course.course_title),
+          description: course.short_description || "Build practical skills that support reentry and daily life.",
           status,
         };
       })
