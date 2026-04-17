@@ -304,16 +304,25 @@ export default function CourseOverviewPage() {
           })}
         </div>
 
-        {/* Quiz CTA at bottom */}
-        {allComplete ? (
-          <div
-            className="mt-4 rounded-2xl border-2 border-[#0f6e56] bg-[#F7FFFB] p-8 text-center"
-            style={{ boxShadow: "0 4px 16px rgba(15,110,86,0.1)" }}
-          >
-            <div className="mb-2 text-2xl font-bold text-[#0f6e56]">All lessons complete!</div>
-            <p className="mb-6 text-gray-600">
-              You finished all {data.total_lessons} lessons. Take the quiz to finish the course.
-            </p>
+        {/* Quiz section - always visible */}
+        <div
+          className="mt-4 rounded-2xl p-8 text-center"
+          style={{
+            border: allComplete ? "2px solid #0f6e56" : "2px solid #D3D1C7",
+            background: allComplete ? "#F7FFFB" : "#FAFAF8",
+            boxShadow: allComplete ? "0 4px 16px rgba(15,110,86,0.1)" : "0 2px 8px rgba(0,0,0,0.04)",
+            opacity: allComplete ? 1 : 0.7,
+          }}
+        >
+          <div className={`mb-2 text-2xl font-bold ${allComplete ? "text-[#0f6e56]" : "text-[#B4B2A9]"}`}>
+            {allComplete ? "All lessons complete!" : "Course Quiz"}
+          </div>
+          <p className={`mb-6 ${allComplete ? "text-gray-600" : "text-[#B4B2A9]"}`}>
+            {allComplete
+              ? `You finished all ${data.total_lessons} lessons. Take the quiz to finish the course.`
+              : `Complete all ${data.total_lessons} lessons to unlock the quiz. You need 7 out of 10 to pass.`}
+          </p>
+          {allComplete ? (
             <Link
               href={`/course/${courseId}/quiz`}
               className="inline-block rounded-xl bg-[#0f6e56] px-8 py-4 text-lg font-bold text-white"
@@ -321,8 +330,15 @@ export default function CourseOverviewPage() {
             >
               Take the Quiz
             </Link>
-          </div>
-        ) : null}
+          ) : (
+            <div
+              className="inline-block rounded-xl px-8 py-4 text-lg font-bold text-[#B4B2A9] cursor-not-allowed"
+              style={{ background: "#E8E6E0" }}
+            >
+              Quiz Locked — {data.total_lessons - data.completed_lessons} lessons left
+            </div>
+          )}
+        </div>
       </div>
     </main>
   );
