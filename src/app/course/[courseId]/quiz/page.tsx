@@ -50,6 +50,15 @@ export default function QuizPage() {
       }
       setCourseTitle(result.course.course_title);
       setQuestions(result.questions);
+
+      // Check if all lessons are complete
+      const progressRes = await fetch(`/api/course-data?courseId=${courseId}`);
+      const progressData = await progressRes.json();
+      if (progressRes.ok && progressData.completed_lessons < progressData.total_lessons) {
+        router.push(`/course/${courseId}`);
+        return;
+      }
+
       setLoading(false);
     }
     load();

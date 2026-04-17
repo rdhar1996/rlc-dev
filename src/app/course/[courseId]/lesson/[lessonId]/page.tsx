@@ -408,8 +408,7 @@ function LessonBlock({
                       const isThisCorrect = opt.key.toUpperCase() === correctAnswer.toUpperCase();
                       const showGreen = isSelected && isCorrect;
                       const showRed = isSelected && isWrong;
-                      // Also show green on the correct answer when user got it wrong
-                      const revealCorrect = isWrong && isThisCorrect;
+                      const revealCorrect = false; // Never reveal - let them keep trying
 
                       let bg = "#F7FFFB";
                       let border = "1px solid #9FE1CB";
@@ -443,13 +442,13 @@ function LessonBlock({
                           {opt.text}
                           {showGreen ? <span className="ml-2">&#10003;</span> : null}
                           {showRed ? <span className="ml-2">&#10007;</span> : null}
-                          {revealCorrect && !isSelected ? <span className="ml-2 text-xs">(correct answer)</span> : null}
+                          
                         </button>
                       );
                     })}
                   </div>
                   {isWrong ? (
-                    <p className="mt-2 text-sm text-[#A32D2D]">Not quite. Try again or look at the correct answer above.</p>
+                    <p className="mt-2 text-sm text-[#A32D2D]">Not quite — try again!</p>
                   ) : null}
                   {isCorrect ? (
                     <p className="mt-2 text-sm font-medium text-[#0F6E56]">That&apos;s right!</p>
