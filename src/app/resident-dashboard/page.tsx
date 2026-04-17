@@ -35,6 +35,7 @@ type Recommendation = {
 };
 
 type Certificate = {
+  id: number;
   resident_id: number;
   course_id: number;
   certificate_url: string | null;
@@ -251,6 +252,7 @@ export default function ResidentDashboardPage() {
           title: course?.course_title || `Course ${row.course_id}`,
           issuedAt: row.issued_at,
           certificateUrl: row.certificate_url,
+          certificateId: row.id,
         };
       })
       .sort((a, b) => a.title.localeCompare(b.title));
@@ -556,9 +558,7 @@ export default function ResidentDashboardPage() {
                   </div>
                   {course.certificateUrl ? (
                     <a
-                      href={course.certificateUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                      href={`/course/${course.courseId}/certificate?id=${course.certificateId || ''}`}
                       className="mt-4 inline-block text-sm font-semibold text-[#378add] hover:underline"
                     >
                       View Certificate

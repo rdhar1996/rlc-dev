@@ -39,6 +39,7 @@ export default function QuizPage() {
   const [totalQuestions, setTotalQuestions] = useState(0);
   const [passed, setPassed] = useState(false);
   const [results, setResults] = useState<QuizResult[]>([]);
+  const [certificateId, setCertificateId] = useState<number | null>(null);
 
   useEffect(() => {
     async function load() {
@@ -87,6 +88,7 @@ export default function QuizPage() {
     setTotalQuestions(result.total_questions);
     setPassed(result.passed);
     setResults(result.results);
+    if (result.certificate_id) setCertificateId(result.certificate_id);
     setSubmitted(true);
     setSubmitting(false);
     window.scrollTo(0, 0);
@@ -163,12 +165,23 @@ export default function QuizPage() {
           {/* Action buttons */}
           <div className="mt-8 flex gap-4">
             {passed ? (
-              <button
-                onClick={() => router.push("/resident-dashboard")}
-                className="flex-1 rounded-md bg-[#0f6e56] py-4 text-lg font-bold text-white"
-              >
-                Back to Dashboard
-              </button>
+              <>
+                {certificateId ? (
+                  <button
+                    onClick={() => router.push(`/course/${courseId}/certificate?id=${certificateId}`)}
+                    className="flex-1 rounded-md py-4 text-lg font-bold text-white"
+                    style={{ background: "#BA7517", boxShadow: "0 4px 12px rgba(186,117,23,0.3)" }}
+                  >
+                    View Certificate
+                  </button>
+                ) : null}
+                <button
+                  onClick={() => router.push("/resident-dashboard")}
+                  className="flex-1 rounded-md bg-[#0f6e56] py-4 text-lg font-bold text-white"
+                >
+                  Back to Dashboard
+                </button>
+              </>
             ) : (
               <>
                 <button

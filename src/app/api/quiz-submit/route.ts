@@ -65,8 +65,18 @@ export async function POST(req: NextRequest) {
     completed_at: new Date().toISOString(),
   });
 
-  // If passed, update enrollment and progress
+  let certificateId = null;
   if (passed) {
+    const { data: certData } = await supabase
+      .from("certificates")
+      .insert({
+        resident_id: Number(residentId),
+        course_id: Number(course_id),
+        issued_at: new Date().toISOString(),
+      })
+      .select("id")
+      .single();
+    if (certData) certificateId = certData.id;
     await supabase
       .from("enrollments")
       .update({
@@ -95,5 +105,6 @@ export async function POST(req: NextRequest) {
     total_questions: totalQuestions,
     passed,
     results,
+    certificate_id: certificateId,
   });
 }
