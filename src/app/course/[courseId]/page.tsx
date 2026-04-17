@@ -178,8 +178,9 @@ export default function CourseOverviewPage() {
 
           {data.sections.map((section) => {
             const isComplete = section.completed_count >= section.total_count && section.total_count > 0;
-            const isInProgress = section.completed_count > 0 && !isComplete;
-            const isUpcoming = section.completed_count === 0;
+            const hasCurrentLesson = section.lessons.some((l) => l.id === continueLesson?.id);
+            const isInProgress = hasCurrentLesson || (section.completed_count > 0 && !isComplete);
+            const isUpcoming = !isComplete && !isInProgress;
 
             return (
               <div key={section.id} className="relative mb-6">
@@ -205,7 +206,7 @@ export default function CourseOverviewPage() {
 
                 {/* Section card */}
                 <div
-                  className={`rounded-r-2xl bg-white p-6 ${isUpcoming ? "opacity-55" : ""}`}
+                  className={`rounded-r-2xl bg-white p-6 ${isUpcoming ? "opacity-100" : ""}`}
                   style={{
                     borderLeft: isComplete
                       ? "4px solid #0F6E56"
@@ -281,7 +282,7 @@ export default function CourseOverviewPage() {
                           <span
                             className="flex-1 text-sm"
                             style={{
-                              color: lessonComplete ? "#085041" : lessonCurrent ? "#633806" : isUpcoming ? "#B4B2A9" : "#888780",
+                              color: lessonComplete ? "#085041" : lessonCurrent ? "#633806" : "#5F5E5A",
                               fontWeight: lessonCurrent ? 500 : 400,
                             }}
                           >
