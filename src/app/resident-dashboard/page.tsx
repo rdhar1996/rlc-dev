@@ -478,6 +478,13 @@ export default function ResidentDashboardPage() {
                 <div className="text-sm text-gray-500">
                   Last activity: {fmtDate(course.lastActivityAt)}
                 </div>
+
+                <button
+                  onClick={() => router.push(`/course/${course.courseId}`)}
+                  className="mt-4 w-full rounded-md bg-[#BA7517] px-4 py-3 text-sm font-bold text-white"
+                >
+                  {course.progressPercent > 0 ? "Continue Learning" : "Start Learning"}
+                </button>
               </div>
             ))
           ) : (
@@ -590,10 +597,9 @@ export default function ResidentDashboardPage() {
                 <button
                   disabled={
                     course.status === "completed" ||
-                    course.status === "current" ||
                     enrollLoadingId === course.id
                   }
-                  onClick={() => handleEnroll(course.id, course.title)}
+                  onClick={() => course.status === "current" ? router.push(`/course/${course.id}`) : handleEnroll(course.id, course.title)}
                   className="w-full rounded-md bg-[#378add] px-4 py-3 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:bg-gray-300"
                 >
                   {enrollLoadingId === course.id
@@ -601,7 +607,7 @@ export default function ResidentDashboardPage() {
                     : course.status === "completed"
                     ? "Completed"
                     : course.status === "current"
-                    ? "Current Course"
+                    ? "Start Learning"
                     : "Enroll"}
                 </button>
               </div>
