@@ -613,7 +613,7 @@ export default function ResidentDashboardPage() {
 
         <div className="mb-6 grid grid-cols-1 md:grid-cols-2 gap-4">
 
-          <button onClick={() => router.push("/ai-hub/job-career")} className="rounded-2xl bg-white p-6 text-left" style={{ boxShadow: "0 2px 10px rgba(0,0,0,0.06)", border: "0.5px solid #EAE7E0" }}>
+          <button onClick={() => router.push("/ai-hub/job-career")} className="rounded-3xl bg-white p-6 text-left transition-transform hover:-translate-y-0.5" style={{ boxShadow: "0 6px 20px rgba(186,117,23,0.12), 0 2px 6px rgba(0,0,0,0.05)", border: "1px solid #F3E6D5" }}>
 
             <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl" style={{ background: "#FAEEDA" }}>
 
@@ -631,7 +631,7 @@ export default function ResidentDashboardPage() {
 
 
 
-          <button onClick={() => router.push("/ai-hub/money-benefits")} className="rounded-2xl bg-white p-6 text-left" style={{ boxShadow: "0 2px 10px rgba(0,0,0,0.06)", border: "0.5px solid #EAE7E0" }}>
+          <button onClick={() => router.push("/ai-hub/money-benefits")} className="rounded-3xl bg-white p-6 text-left transition-transform hover:-translate-y-0.5" style={{ boxShadow: "0 6px 20px rgba(15,110,86,0.12), 0 2px 6px rgba(0,0,0,0.05)", border: "1px solid #D6EFE3" }}>
 
             <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl" style={{ background: "#E1F5EE" }}>
 
@@ -649,7 +649,7 @@ export default function ResidentDashboardPage() {
 
 
 
-          <button onClick={() => router.push("/ai-hub/housing")} className="rounded-2xl bg-white p-6 text-left" style={{ boxShadow: "0 2px 10px rgba(0,0,0,0.06)", border: "0.5px solid #EAE7E0" }}>
+          <button onClick={() => router.push("/ai-hub/housing")} className="rounded-3xl bg-white p-6 text-left transition-transform hover:-translate-y-0.5" style={{ boxShadow: "0 6px 20px rgba(127,119,221,0.12), 0 2px 6px rgba(0,0,0,0.05)", border: "1px solid #E0DCF7" }}>
 
             <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl" style={{ background: "#EEEDFE" }}>
 
@@ -667,7 +667,7 @@ export default function ResidentDashboardPage() {
 
 
 
-          <button onClick={() => router.push("/ai-hub/life-navigation")} className="rounded-2xl bg-white p-6 text-left" style={{ boxShadow: "0 2px 10px rgba(0,0,0,0.06)", border: "0.5px solid #EAE7E0" }}>
+          <button onClick={() => router.push("/ai-hub/life-navigation")} className="rounded-3xl bg-white p-6 text-left transition-transform hover:-translate-y-0.5" style={{ boxShadow: "0 6px 20px rgba(216,90,48,0.12), 0 2px 6px rgba(0,0,0,0.05)", border: "1px solid #F5D4C4" }}>
 
             <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl" style={{ background: "#FAECE7" }}>
 

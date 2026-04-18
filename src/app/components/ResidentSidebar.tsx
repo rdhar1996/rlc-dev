@@ -28,8 +28,14 @@ export default function ResidentSidebar() {
   const tier2 = courses.filter((c) => c.tier === "Tier 2");
 
   return (
-    <div className="w-[220px] flex-shrink-0 rounded-2xl bg-white p-3 shadow-sm h-fit">
-      <div className="px-2 mb-3 text-[11px] font-semibold uppercase tracking-wider text-gray-500">
+    <div
+      className="w-[230px] flex-shrink-0 rounded-2xl bg-white p-3 h-fit"
+      style={{
+        border: "1px solid #E5E2DA",
+        boxShadow: "0 2px 12px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.04)",
+      }}
+    >
+      <div className="px-2 pt-2 pb-3 mb-2 border-b border-[#E5E2DA] text-[14px] font-bold uppercase tracking-wider text-[#1e3a5f]">
         Courses
       </div>
 
@@ -45,7 +51,7 @@ export default function ResidentSidebar() {
       </button>
 
       {tier1Open ? (
-        <div className="mt-1 mb-3 pl-3 grid gap-0.5">
+        <div className="mt-1 mb-3 pl-3 flex flex-col divide-y divide-[#F1EFE8]">
           {tier1.map((c) => {
             const isCompleted = c.status === "completed";
             const isInProgress = c.status === "in_progress";
