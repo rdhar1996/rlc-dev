@@ -73,21 +73,44 @@ export default function ResidentSidebar() {
         </div>
       ) : null}
 
-      <button
+<button
         onClick={() => setTier2Open(!tier2Open)}
-        className="mt-1 flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left hover:bg-gray-50"
+        className={`mt-1 flex w-full items-center gap-2 rounded-r-lg ${tier2.length > 0 ? "border-l-[3px] border-[#378add] bg-[#EFF6FF]" : ""} px-3 py-2 text-left hover:bg-gray-50`}
       >
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#888780" strokeWidth="3" style={{ transform: tier2Open ? "rotate(0deg)" : "rotate(-90deg)", transition: "transform 0.15s" }}>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={tier2.length > 0 ? "#1E40AF" : "#888780"} strokeWidth="3" style={{ transform: tier2Open ? "rotate(0deg)" : "rotate(-90deg)", transition: "transform 0.15s" }}>
           <polyline points="6 9 12 15 18 9" />
         </svg>
-        <span className="flex-1 text-[13px] text-[#5F5E5A]">Tier 2</span>
-        <span className="text-[10px] text-[#B4B2A9]">Soon</span>
+        <span className={`flex-1 text-[13px] ${tier2.length > 0 ? "font-medium text-[#1E40AF]" : "text-[#5F5E5A]"}`}>Tier 2</span>
+        <span className="text-[10px] text-gray-500">{tier2.length > 0 ? tier2.length : "Soon"}</span>
       </button>
 
       {tier2Open ? (
-        <div className="mt-1 pl-3 text-[11px] text-[#B4B2A9] px-2">
-          Coming soon
-        </div>
+        tier2.length > 0 ? (
+          <div className="mt-1 pl-3 flex flex-col divide-y divide-[#F1EFE8]">
+            {tier2.map((c) => {
+              const isCompleted = c.status === "completed";
+              const isInProgress = c.status === "in_progress";
+              return (
+                <Link
+                  key={c.id}
+                  href={`/course/${c.id}/details`}
+                  className={`flex items-start gap-1.5 rounded-md px-2 py-1.5 text-[12px] ${
+                    isCompleted ? "bg-[#E1F5EE] text-[#085041]" :
+                    isInProgress ? "bg-[#FAEEDA] text-[#633806]" :
+                    "text-[#5F5E5A] hover:bg-gray-50"
+                  }`}
+                >
+                  {isCompleted ? <span>&#10003;</span> : isInProgress ? <span>&bull;</span> : null}
+                  <span className="leading-tight">{c.course_title}</span>
+                </Link>
+              );
+            })}
+          </div>
+        ) : (
+          <div className="mt-1 pl-3 text-[11px] text-[#B4B2A9] px-2">
+            Coming soon
+          </div>
+        )
       ) : null}
 
       <div className="mt-4 px-2 pb-1 text-[10px] text-[#B4B2A9] leading-relaxed">
