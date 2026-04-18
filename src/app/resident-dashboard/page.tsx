@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
+import ResidentSidebar from "../components/ResidentSidebar";
 
 type Resident = {
   id: number;
@@ -372,8 +373,7 @@ export default function ResidentDashboardPage() {
       <main className="flex min-h-screen items-center justify-center bg-[#f8f9fa]">
         <div className="text-lg font-semibold text-[#1e3a5f]">
           Loading your dashboard...
-        </div>
-      </main>
+        </div></div></div></main>
     );
   }
 
@@ -603,47 +603,82 @@ export default function ResidentDashboardPage() {
           )}
         </div>
 
-        <SectionTitle title="All Courses" />
+                <SectionTitle title="AI Hub Center" />
 
-        <div className="mb-6 overflow-x-auto pb-2">
-          <div className="flex min-w-max gap-5">
-            {computed.allCourses.map((course) => (
-              <div
-                key={course.id}
-                className="w-[260px] shrink-0 rounded-xl bg-white p-5 shadow"
-              >
-                <div className="mb-2 flex items-start justify-between gap-3">
-                  <div className="text-lg font-bold text-[#1e3a5f]">{course.title}</div>
-                  <span className={`rounded-full px-3 py-1 text-[11px] font-semibold ${statusBadgeClass(course.status)}`}>
-                    {displayCourseStatus(course.status)}
-                  </span>
-                </div>
 
-                <div className="mb-2 text-sm text-gray-500">{course.tier}</div>
 
-                <p className="mb-5 text-sm text-gray-600">
-                  {course.description}
-                </p>
+        <div className="mb-6 grid grid-cols-1 md:grid-cols-2 gap-4">
 
-                <button
-                  disabled={
-                    course.status === "completed" ||
-                    enrollLoadingId === course.id
-                  }
-                  onClick={() => course.status === "current" ? router.push(`/course/${course.id}`) : handleEnroll(course.id, course.title)}
-                  className="w-full rounded-md bg-[#378add] px-4 py-3 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:bg-gray-300"
-                >
-                  {enrollLoadingId === course.id
-                    ? "Adding..."
-                    : course.status === "completed"
-                    ? "Completed"
-                    : course.status === "current"
-                    ? "Start Learning"
-                    : "Enroll"}
-                </button>
-              </div>
-            ))}
-          </div>
+          <button onClick={() => router.push("/ai-hub/job-career")} className="rounded-2xl bg-white p-6 text-left" style={{ boxShadow: "0 2px 10px rgba(0,0,0,0.06)", border: "0.5px solid #EAE7E0" }}>
+
+            <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl" style={{ background: "#FAEEDA" }}>
+
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#854F0B" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M20 7h-3V4a2 2 0 0 0-2-2H9a2 2 0 0 0-2 2v3H4a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="8" y1="16" x2="13" y2="16"/></svg>
+
+            </div>
+
+            <div className="mb-1 text-lg font-bold text-[#1e3a5f]">Job & career</div>
+
+            <div className="mb-3 text-sm text-[#888780]">Resume, cover letter, interview practice, and job posting help.</div>
+
+            <div className="text-xs font-medium text-[#BA7517]">4 tools &rarr;</div>
+
+          </button>
+
+
+
+          <button onClick={() => router.push("/ai-hub/money-benefits")} className="rounded-2xl bg-white p-6 text-left" style={{ boxShadow: "0 2px 10px rgba(0,0,0,0.06)", border: "0.5px solid #EAE7E0" }}>
+
+            <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl" style={{ background: "#E1F5EE" }}>
+
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#085041" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="6" width="20" height="13" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/><circle cx="18" cy="15" r="1.5"/></svg>
+
+            </div>
+
+            <div className="mb-1 text-lg font-bold text-[#1e3a5f]">Money & benefits</div>
+
+            <div className="mb-3 text-sm text-[#888780]">Build a budget and understand paystubs or tax forms.</div>
+
+            <div className="text-xs font-medium text-[#0F6E56]">2 tools &rarr;</div>
+
+          </button>
+
+
+
+          <button onClick={() => router.push("/ai-hub/housing")} className="rounded-2xl bg-white p-6 text-left" style={{ boxShadow: "0 2px 10px rgba(0,0,0,0.06)", border: "0.5px solid #EAE7E0" }}>
+
+            <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl" style={{ background: "#EEEDFE" }}>
+
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#3C3489" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M3 10l9-7 9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+
+            </div>
+
+            <div className="mb-1 text-lg font-bold text-[#1e3a5f]">Housing</div>
+
+            <div className="mb-3 text-sm text-[#888780]">Plan for a place to live and understand your lease.</div>
+
+            <div className="text-xs font-medium text-[#3C3489]">2 tools &rarr;</div>
+
+          </button>
+
+
+
+          <button onClick={() => router.push("/ai-hub/life-navigation")} className="rounded-2xl bg-white p-6 text-left" style={{ boxShadow: "0 2px 10px rgba(0,0,0,0.06)", border: "0.5px solid #EAE7E0" }}>
+
+            <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl" style={{ background: "#FAECE7" }}>
+
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#712B13" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+
+            </div>
+
+            <div className="mb-1 text-lg font-bold text-[#1e3a5f]">Life navigation</div>
+
+            <div className="mb-3 text-sm text-[#888780]">Translate documents, practice hard talks, find resources.</div>
+
+            <div className="text-xs font-medium text-[#712B13]">5 tools &rarr;</div>
+
+          </button>
+
         </div>
 
         {toastVisible ? (
