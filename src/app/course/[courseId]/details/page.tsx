@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 import { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
 
@@ -89,7 +91,7 @@ export default function CourseDetailsPage() {
       <header className="bg-[#1e3a5f] px-8 py-4" style={{ boxShadow: "0 4px 16px rgba(30,58,95,0.2)" }}>
         <div className="mx-auto flex max-w-5xl items-center justify-between">
           <div>
-            <div className="text-2xl font-extrabold text-white">RLC</div>
+            <Link href="/resident-dashboard" className="cursor-pointer hover:opacity-80 transition-opacity"><div className="text-2xl font-extrabold text-white">RLC</div></Link>
             <div className="text-sm text-blue-100">Course Details</div>
           </div>
           <button

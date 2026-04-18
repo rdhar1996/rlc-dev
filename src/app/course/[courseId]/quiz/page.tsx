@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 import { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
 
@@ -108,7 +110,7 @@ export default function QuizPage() {
       <main className="min-h-screen bg-[#f8f9fa]">
         <header className="bg-[#1e3a5f] px-8 py-4 shadow-md">
           <div className="mx-auto flex max-w-3xl items-center justify-between">
-            <div className="text-2xl font-extrabold text-white">RLC</div>
+            <Link href="/resident-dashboard" className="cursor-pointer hover:opacity-80 transition-opacity"><div className="text-2xl font-extrabold text-white">RLC</div></Link>
             <button
               onClick={() => router.push(`/course/${courseId}`)}
               className="rounded-md bg-[#378add] px-4 py-2 text-sm font-semibold text-white"

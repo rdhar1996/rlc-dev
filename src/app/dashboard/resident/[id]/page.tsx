@@ -750,7 +750,7 @@ export default function ResidentProfilePage() {
                         value={course.id}
                         disabled={alreadyActive}
                       >
-                        {course.course_title}
+                        {course.tier ? `${course.tier}: ` : ""}{course.course_title}
                         {alreadyActive ? " (already recommended)" : ""}
                       </option>
                     );

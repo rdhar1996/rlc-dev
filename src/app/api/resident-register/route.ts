@@ -27,10 +27,11 @@ export async function POST(req: NextRequest) {
 
     const supabase = createServerSupabase();
 
+    const cleanRegisterNumber = String(register_number).trim();
     const { data: existing } = await supabase
       .from("residents")
       .select("id")
-      .eq("register_number", register_number)
+      .eq("register_number", cleanRegisterNumber)
       .maybeSingle();
 
     if (existing) {
@@ -43,7 +44,7 @@ export async function POST(req: NextRequest) {
     const { error } = await supabase.from("residents").insert({
       first_name,
       last_name,
-      register_number,
+      register_number: cleanRegisterNumber,
       facility_id: Number(facility_id),
       pin_hash: pin,
       account_status: "active",

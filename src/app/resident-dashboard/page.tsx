@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import ResidentSidebar from "../components/ResidentSidebar";
@@ -404,7 +406,7 @@ export default function ResidentDashboardPage() {
       <header className="bg-[#1e3a5f] px-8 py-4 shadow-md">
         <div className="mx-auto flex max-w-7xl items-center justify-between">
           <div>
-            <div className="text-2xl font-extrabold text-white">RLC</div>
+            <Link href="/resident-dashboard" className="cursor-pointer hover:opacity-80 transition-opacity"><div className="text-2xl font-extrabold text-white">RLC</div></Link>
             <div className="text-sm text-blue-100">Resident Dashboard</div>
           </div>
 

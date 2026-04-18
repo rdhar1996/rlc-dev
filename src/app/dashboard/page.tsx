@@ -638,7 +638,7 @@ export default function DashboardPage() {
         <header className="bg-[#1e3a5f] px-8 py-4 shadow-md">
           <div className="mx-auto flex max-w-7xl items-center justify-between">
             <div>
-              <div className="text-2xl font-extrabold text-white">RLC</div>
+              <Link href="/dashboard" className="cursor-pointer hover:opacity-80 transition-opacity"><div className="text-2xl font-extrabold text-white">RLC</div></Link>
               <div className="text-sm text-blue-100">Facility Dashboard</div>
             </div>
           </div>
