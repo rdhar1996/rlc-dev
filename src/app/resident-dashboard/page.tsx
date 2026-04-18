@@ -464,7 +464,7 @@ export default function ResidentDashboardPage() {
 
         <SectionTitle title="Current Courses" />
 
-        <div className="mb-10 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+        <div className="mb-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {computed.currentCourses.length ? (
             computed.currentCourses.map((course) => (
               <div key={course.courseId} className="rounded-xl bg-white p-6 shadow">
@@ -489,27 +489,27 @@ export default function ResidentDashboardPage() {
                   </div>
                 </div>
 
-                <div className="mb-2 flex items-center justify-between text-sm">
+                <div className="mb-1.5 flex items-center justify-between text-xs">
                   <span className={`font-medium ${statusTextClass(course.progressStatus, course.progressPercent)}`}>
                     {displayStatus(course.progressStatus, course.progressPercent)}
                   </span>
                   <span className="text-gray-500">{course.progressPercent}%</span>
                 </div>
 
-                <div className="mb-4 h-3 rounded-full bg-gray-200">
+                <div className="mb-3 h-2 rounded-full bg-gray-200">
                   <div
                     className={`h-3 rounded-full ${statusBarClass(course.progressStatus, course.progressPercent)}`}
                     style={{ width: `${course.progressPercent}%` }}
                   />
                 </div>
 
-                <div className="text-sm text-gray-500">
+                <div className="text-xs text-gray-500">
                   Last activity: {fmtDate(course.lastActivityAt)}
                 </div>
 
                 <button
                   onClick={() => router.push(`/course/${course.courseId}`)}
-                  className="mt-4 w-full rounded-md bg-[#BA7517] px-4 py-3 text-sm font-bold text-white"
+                  className="mt-3 w-full rounded-md bg-[#BA7517] px-4 py-2.5 text-sm font-bold text-white"
                 >
                   {course.progressPercent > 0 ? "Continue Learning" : "Start Learning"}
                 </button>
@@ -533,7 +533,7 @@ export default function ResidentDashboardPage() {
 
         <SectionTitle title="Completed Courses" />
 
-        <div className="mb-10 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+        <div className="mb-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {computed.completedCourses.length ? (
             computed.completedCourses.map((course) => (
               <div
@@ -551,20 +551,17 @@ export default function ResidentDashboardPage() {
                   </span>
                 </div>
 
-                <div className="text-sm text-gray-500">
+                <div className="text-xs text-gray-500">
                   Completed: {fmtDate(course.completedAt)}
                 </div>
 
-                {course.certificateUrl ? (
-                  <a
-                    href={course.certificateUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-4 inline-block text-sm font-semibold text-[#378add] hover:underline"
-                  >
-                    View Certificate
-                  </a>
-                ) : null}
+                <a
+                  href={`/course/${course.courseId}/certificate?id=${course.certificateId || ''}`}
+                  className="mt-4 inline-flex items-center gap-2 rounded-lg bg-[#0f6e56] px-4 py-2 text-sm font-semibold text-white"
+                  style={{ boxShadow: "0 2px 8px rgba(15,110,86,0.25)" }}
+                >
+                  View Certificate
+                </a>
               </div>
             ))
           ) : (
@@ -574,40 +571,7 @@ export default function ResidentDashboardPage() {
           )}
         </div>
 
-        <SectionTitle title="Certificates" />
-
-        <div className="mb-10 rounded-xl bg-white p-6 shadow">
-          {computed.certificateCourses.length ? (
-            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-              {computed.certificateCourses.map((course) => (
-                <div
-                  key={course.courseId}
-                  className="rounded-xl border border-[#0f6e56]/20 bg-[#f7fffb] p-5"
-                >
-                  <div className="mb-2 text-xs font-semibold uppercase tracking-wide text-[#0f6e56]">
-                    Certificate Earned
-                  </div>
-                  <div className="text-lg font-bold text-[#1e3a5f]">{course.title}</div>
-                  <div className="mt-2 text-sm text-gray-500">
-                    Issued: {fmtDate(course.issuedAt)}
-                  </div>
-                  {course.certificateUrl ? (
-                    <a
-                      href={`/course/${course.courseId}/certificate?id=${course.certificateId || ''}`}
-                      className="mt-4 inline-block text-sm font-semibold text-[#378add] hover:underline"
-                    >
-                      View Certificate
-                    </a>
-                  ) : null}
-                </div>
-              ))}
-            </div>
-          ) : (
-            <EmptyState text="No certificates yet." />
-          )}
-        </div>
-
-                <div className="mb-10 rounded-3xl p-7" style={{ background: "linear-gradient(135deg, #F0E8FE 0%, #FFF3E0 50%, #FFE8D9 100%)", border: "1px solid #E5D9F7", boxShadow: "0 4px 20px rgba(124, 58, 237, 0.08), 0 1px 3px rgba(0,0,0,0.04)" }}>
+        <div className="mb-10 rounded-3xl p-7" style={{ background: "linear-gradient(135deg, #F0E8FE 0%, #FFF3E0 50%, #FFE8D9 100%)", border: "1px solid #E5D9F7", boxShadow: "0 4px 20px rgba(124, 58, 237, 0.08), 0 1px 3px rgba(0,0,0,0.04)" }}>
           <div className="mb-5 flex items-center gap-3">
             <div className="flex h-11 w-11 items-center justify-center rounded-2xl" style={{ background: "linear-gradient(135deg, #7F77DD 0%, #BA7517 100%)", boxShadow: "0 4px 12px rgba(127, 119, 221, 0.3)" }}>
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
