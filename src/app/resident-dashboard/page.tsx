@@ -373,7 +373,8 @@ export default function ResidentDashboardPage() {
       <main className="flex min-h-screen items-center justify-center bg-[#f8f9fa]">
         <div className="text-lg font-semibold text-[#1e3a5f]">
           Loading your dashboard...
-        </div></div></div></main>
+        </div>
+      </main>
     );
   }
 
@@ -417,6 +418,9 @@ export default function ResidentDashboardPage() {
       </header>
 
       <div className="mx-auto max-w-7xl px-8 py-10">
+        <div className="flex gap-6">
+          <ResidentSidebar />
+          <div className="flex-1 min-w-0">
         <div className="mb-8">
           <h1 className="text-4xl font-bold text-[#1e3a5f]">
             Welcome, {data.resident.first_name}
@@ -687,6 +691,8 @@ export default function ResidentDashboardPage() {
           </div>
         ) : null}
       </div>
+          </div>
+        </div>
     </main>
   );
 }
