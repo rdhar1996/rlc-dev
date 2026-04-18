@@ -3,6 +3,7 @@
 import Link from "next/link";
 
 import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
 
 const categories = [
   {
