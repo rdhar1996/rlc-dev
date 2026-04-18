@@ -53,14 +53,14 @@ export default function ResidentSidebar() {
               <Link
                 key={c.id}
                 href={`/course/${c.id}/details`}
-                className={`flex items-center gap-1.5 rounded-md px-2 py-1.5 text-[12px] ${
+                className={`flex items-start gap-1.5 rounded-md px-2 py-1.5 text-[12px] ${
                   isCompleted ? "bg-[#E1F5EE] text-[#085041]" :
                   isInProgress ? "bg-[#FAEEDA] text-[#633806]" :
                   "text-[#5F5E5A] hover:bg-gray-50"
                 }`}
               >
                 {isCompleted ? <span>&#10003;</span> : isInProgress ? <span>&bull;</span> : null}
-                <span className="truncate">{c.course_title}</span>
+                <span className="leading-tight">{c.course_title}</span>
               </Link>
             );
           })}
