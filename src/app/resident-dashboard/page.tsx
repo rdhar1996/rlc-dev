@@ -706,19 +706,32 @@ function StatCard({
   value: number;
   accent?: "blue" | "teal" | "coral" | "green";
 }) {
-  const accentMap = {
-    blue: "border-t-[#378add]",
-    teal: "border-t-[#0f6e56]",
-    coral: "border-t-[#d85a30]",
-    green: "border-t-[#10b981]",
+  const accentConfig: Record<string, { border: string; bg: string; accent: string }> = {
+    blue: { border: "#378add", bg: "#E6F1FB", accent: "#185FA5" },
+    teal: { border: "#0f6e56", bg: "#E1F5EE", accent: "#085041" },
+    coral: { border: "#d85a30", bg: "#FAECE7", accent: "#993C1D" },
+    green: { border: "#10b981", bg: "#EAF3DE", accent: "#3B6D11" },
   };
+  const cfg = accentConfig[accent];
 
   return (
-    <div className={`rounded-xl border-t-4 bg-white p-6 shadow ${accentMap[accent]}`}>
-      <div className="mb-2 text-xs font-semibold uppercase tracking-wide text-gray-500">
-        {label}
+    <div
+      className="relative overflow-hidden rounded-2xl bg-white p-7"
+      style={{
+        boxShadow: "0 4px 16px rgba(0,0,0,0.08), 0 1px 4px rgba(0,0,0,0.04)",
+        borderTop: `4px solid ${cfg.border}`,
+      }}
+    >
+      <div
+        className="absolute -right-6 -top-6 h-24 w-24 rounded-full opacity-50"
+        style={{ background: cfg.bg }}
+      />
+      <div className="relative">
+        <div className="mb-3 text-xs font-bold uppercase tracking-widest" style={{ color: cfg.accent }}>
+          {label}
+        </div>
+        <div className="text-5xl font-extrabold text-[#1e3a5f]">{value}</div>
       </div>
-      <div className="text-4xl font-extrabold text-[#1e3a5f]">{value}</div>
     </div>
   );
 }
