@@ -24,7 +24,7 @@ export async function GET(req: NextRequest) {
   ] = await Promise.all([
     supabase
       .from("residents")
-      .select("id, first_name, last_name, register_number, facility_id")
+      .select("id, first_name, last_name, register_number, facility_id, facilities(facility_type, facility_name)")
       .eq("id", Number(residentId))
       .single(),
     supabase
@@ -53,8 +53,15 @@ export async function GET(req: NextRequest) {
     );
   }
 
+  const facilityType = (resident as { facilities?: { facility_type?: string } })?.facilities?.facility_type || "halfway_house";
+  const facilityName = (resident as { facilities?: { facility_name?: string } })?.facilities?.facility_name || "";
+  const isInmate = facilityType === "bop_prison";
+
   return NextResponse.json({
     resident: resident || null,
+    facility_type: facilityType,
+    facility_name: facilityName,
+    is_inmate: isInmate,
     enrollments: enrollments || [],
     progress: progress || [],
     recommendations: recommendations || [],

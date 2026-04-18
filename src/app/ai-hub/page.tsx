@@ -72,6 +72,28 @@ const categories = [
 
 export default function AIHubPage() {
   const router = useRouter();
+  const [checking, setChecking] = useState(true);
+
+  useEffect(() => {
+    async function checkAccess() {
+      const res = await fetch("/api/resident-dashboard");
+      const data = await res.json();
+      if (!res.ok || data.is_inmate) {
+        router.push("/resident-dashboard");
+        return;
+      }
+      setChecking(false);
+    }
+    checkAccess();
+  }, [router]);
+
+  if (checking) {
+    return (
+      <main className="flex min-h-screen items-center justify-center" style={{ background: "#F5F3EE" }}>
+        <div className="text-lg font-semibold text-[#1e3a5f]">Loading...</div>
+      </main>
+    );
+  }
 
   return (
     <main className="min-h-screen" style={{ background: "#F5F3EE" }}>

@@ -682,7 +682,7 @@ export default function DashboardPage() {
               <div>{selectedFacilityName}</div>
             </div>
 
-            <button
+            <button onClick={() => router.push("/dashboard/register-inmate")} className="mr-3 rounded-md bg-[#BA7517] px-4 py-2 text-sm font-semibold text-white">Register an Inmate</button><button
               onClick={handleLogout}
               className="rounded-md bg-[#d85a30] px-4 py-2 text-sm font-semibold text-white"
             >

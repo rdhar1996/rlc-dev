@@ -55,6 +55,9 @@ type Course = {
 
 type DashboardResponse = {
   resident: Resident | null;
+  is_inmate?: boolean;
+  facility_type?: string;
+  facility_name?: string;
   enrollments: Enrollment[];
   progress: ProgressRow[];
   recommendations: Recommendation[];
@@ -573,6 +576,7 @@ export default function ResidentDashboardPage() {
           )}
         </div>
 
+        {!data.is_inmate ? (
         <div className="mb-10 rounded-3xl p-7" style={{ background: "linear-gradient(135deg, #F0E8FE 0%, #FFF3E0 50%, #FFE8D9 100%)", border: "1px solid #E5D9F7", boxShadow: "0 4px 20px rgba(124, 58, 237, 0.08), 0 1px 3px rgba(0,0,0,0.04)" }}>
           <div className="mb-5 flex items-center gap-3">
             <div className="flex h-11 w-11 items-center justify-center rounded-2xl" style={{ background: "linear-gradient(135deg, #7F77DD 0%, #BA7517 100%)", boxShadow: "0 4px 12px rgba(127, 119, 221, 0.3)" }}>
@@ -662,6 +666,7 @@ export default function ResidentDashboardPage() {
 
         </div>
         </div>
+        ) : null}
 
         {toastVisible ? (
           <div className="fixed bottom-6 right-6 rounded-lg bg-[#1e3a5f] px-5 py-4 text-sm font-medium text-white shadow-lg">
