@@ -607,11 +607,22 @@ export default function ResidentDashboardPage() {
           )}
         </div>
 
-                <SectionTitle title="AI Hub Center" />
+                <div className="mb-10 rounded-3xl p-7" style={{ background: "linear-gradient(135deg, #F0E8FE 0%, #FFF3E0 50%, #FFE8D9 100%)", border: "1px solid #E5D9F7", boxShadow: "0 4px 20px rgba(124, 58, 237, 0.08), 0 1px 3px rgba(0,0,0,0.04)" }}>
+          <div className="mb-5 flex items-center gap-3">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl" style={{ background: "linear-gradient(135deg, #7F77DD 0%, #BA7517 100%)", boxShadow: "0 4px 12px rgba(127, 119, 221, 0.3)" }}>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 2L15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2z"/>
+              </svg>
+            </div>
+            <div>
+              <h2 className="text-2xl font-extrabold tracking-wider text-[#1e3a5f]">AI HUB CENTER</h2>
+              <p className="text-sm text-[#5F5E5A]">Smart tools to help you tackle real life tasks.</p>
+            </div>
+          </div>
 
 
 
-        <div className="mb-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
           <button onClick={() => router.push("/ai-hub/job-career")} className="rounded-3xl bg-white p-6 text-left transition-transform hover:-translate-y-0.5" style={{ boxShadow: "0 6px 20px rgba(186,117,23,0.12), 0 2px 6px rgba(0,0,0,0.05)", border: "1px solid #F3E6D5" }}>
 
@@ -683,6 +694,7 @@ export default function ResidentDashboardPage() {
 
           </button>
 
+        </div>
         </div>
 
         {toastVisible ? (
