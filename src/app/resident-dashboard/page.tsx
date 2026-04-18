@@ -315,6 +315,28 @@ export default function ResidentDashboardPage() {
     router.push("/");
   };
 
+  const handleUnenroll = async (courseId: number, courseTitle: string) => {
+    const confirmed = window.confirm("Remove " + courseTitle + " from your courses? Your progress for this course will be deleted.");
+    if (!confirmed) return;
+
+    const res = await fetch("/api/resident-unenroll", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ course_id: courseId }),
+    });
+    const result = await res.json();
+    if (!res.ok) {
+      setToastMessage(result.error || "Unable to remove course.");
+      setToastVisible(true);
+      setTimeout(() => setToastVisible(false), 2500);
+      return;
+    }
+    setToastMessage("Removed: " + courseTitle);
+    setToastVisible(true);
+    await loadDashboard();
+    setTimeout(() => setToastVisible(false), 2200);
+  };
+
   const handleEnroll = async (courseId: number, courseTitle: string) => {
     setEnrollLoadingId(courseId);
 
@@ -487,6 +509,15 @@ export default function ResidentDashboardPage() {
                 >
                   {course.progressPercent > 0 ? "Continue Learning" : "Start Learning"}
                 </button>
+
+                <div className="mt-3 text-center">
+                  <button
+                    onClick={() => handleUnenroll(course.courseId, course.title)}
+                    className="text-[11px] font-normal text-gray-400 hover:text-gray-600 hover:underline"
+                  >
+                    Remove course
+                  </button>
+                </div>
               </div>
             ))
           ) : (
