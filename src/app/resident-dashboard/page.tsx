@@ -166,6 +166,7 @@ export default function ResidentDashboardPage() {
           tier: string;
           completedAt: string | null;
           certificateUrl: string | null;
+          certificateId: number | null;
         }>,
         certificateCourses: [] as Array<{
           courseId: number;
@@ -215,6 +216,7 @@ export default function ResidentDashboardPage() {
           isRecommended: activeRecommendationCourseIds.has(enrollment.course_id),
           hasCertificate: Boolean(certificate),
           certificateUrl: certificate?.certificate_url || null,
+          certificateId: (certificate as { id?: number })?.id || null,
           completedAt: enrollment.completed_at,
         };
       })
@@ -231,6 +233,7 @@ export default function ResidentDashboardPage() {
         tier: course.tier,
         completedAt: course.completedAt || null,
         certificateUrl: course.certificateUrl,
+        certificateId: course.certificateId,
       }));
 
     const currentCourses = allEnrolledCourses.filter(
