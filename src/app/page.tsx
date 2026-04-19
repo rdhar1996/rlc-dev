@@ -4,6 +4,32 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
+const tier1Courses = [
+  { title: "Employment Readiness", hours: 30 },
+  { title: "Substance Abuse Prevention", hours: 30 },
+  { title: "Prosocial Attitudes", hours: 25 },
+  { title: "Housing Stability", hours: 25 },
+  { title: "Mental Health & Trauma", hours: 30 },
+  { title: "Legal Literacy & ID", hours: 25 },
+  { title: "Financial Fundamentals", hours: 25 },
+  { title: "Behavioral Health Basics", hours: 25 },
+  { title: "Criminal Thinking Patterns", hours: 25 },
+  { title: "Family & Parenting", hours: 25 },
+];
+
+const tier2Courses = [
+  { title: "Advanced Employment", hours: 40 },
+  { title: "Active Recovery", hours: 40 },
+  { title: "Building Relationships", hours: 35 },
+  { title: "Independent Housing", hours: 35 },
+  { title: "Mental Health Daily", hours: 40 },
+  { title: "Legal Matters", hours: 35 },
+  { title: "Banking & Credit", hours: 35 },
+  { title: "Hard Decisions", hours: 35 },
+  { title: "Rebuilding Life", hours: 35 },
+  { title: "Active Parenting", hours: 35 },
+];
+
 export default function Home() {
   const router = useRouter();
 
@@ -64,80 +90,84 @@ export default function Home() {
         </div>
       </header>
 
+      {/* Hero */}
       <section className="bg-gradient-to-br from-[#1e3a5f] to-[#2a4a7c] px-8 py-20 text-white">
-        <div className="mx-auto max-w-6xl text-center">
+        <div className="mx-auto max-w-4xl text-center">
+          <div className="mb-3 text-sm font-semibold uppercase tracking-[0.3em] text-[#FAC775]">
+            From Custody to Community
+          </div>
+
           <h1 className="mb-4 text-5xl font-bold leading-tight">
-            Your Path to Success Starts Here
+            Your path to success starts here
           </h1>
 
           <p className="mx-auto mb-10 max-w-3xl text-lg text-blue-100">
             Build skills today, access resources for life.
           </p>
 
-          <div className="mx-auto grid max-w-4xl gap-8 md:grid-cols-[2fr_1fr]">
-            <div className="rounded-xl bg-white/15 p-6 backdrop-blur">
-              <div className="grid gap-4 md:grid-cols-2">
-                <div className="text-left">
-                  <label className="mb-1 block text-sm font-semibold text-white">
-                    Federal Register #
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="e.g., 65791-056"
-                    value={registerNumber}
-                    onChange={(e) => setRegisterNumber(e.target.value)}
-                    className="w-full rounded-md border border-white/30 bg-white/20 px-4 py-3 text-white placeholder:text-white/70"
-                  />
-                </div>
-
-                <div className="text-left">
-                  <label className="mb-1 block text-sm font-semibold text-white">
-                    PIN ID
-                  </label>
-                  <input
-                    type="password"
-                    placeholder="4 digits"
-                    value={pin}
-                    onChange={(e) => setPin(e.target.value)}
-                    className="w-full rounded-md border border-white/30 bg-white/20 px-4 py-3 text-white placeholder:text-white/70"
-                  />
-                </div>
+          {/* Centered Sign In Form */}
+          <div className="mx-auto max-w-lg rounded-2xl border border-white/15 bg-white/10 p-6 backdrop-blur">
+            <div className="mb-3 grid gap-3 md:grid-cols-2">
+              <div className="text-left">
+                <label className="mb-1 block text-xs font-semibold uppercase tracking-wider text-blue-100">
+                  Federal Register #
+                </label>
+                <input
+                  type="text"
+                  placeholder="e.g., 65791-056"
+                  value={registerNumber}
+                  onChange={(e) => setRegisterNumber(e.target.value)}
+                  className="w-full rounded-lg border border-white/30 bg-white/20 px-4 py-3 text-white placeholder:text-white/70 outline-none focus:border-white/60"
+                />
               </div>
 
-              <button
-                onClick={handleResidentLogin}
-                disabled={loading}
-                className="mt-4 w-full rounded-md bg-[#378add] px-4 py-3 font-bold text-white disabled:opacity-60"
-              >
-                {loading ? "Signing In..." : "Sign In"}
-              </button>
+              <div className="text-left">
+                <label className="mb-1 block text-xs font-semibold uppercase tracking-wider text-blue-100">
+                  PIN ID
+                </label>
+                <input
+                  type="password"
+                  placeholder="4 digits"
+                  value={pin}
+                  onChange={(e) => setPin(e.target.value)}
+                  className="w-full rounded-lg border border-white/30 bg-white/20 px-4 py-3 text-white placeholder:text-white/70 outline-none focus:border-white/60"
+                />
+              </div>
+            </div>
 
+            <button
+              onClick={handleResidentLogin}
+              disabled={loading}
+              className="w-full rounded-lg bg-[#378add] px-4 py-3 font-bold text-white hover:bg-[#2d75c4] disabled:opacity-60"
+            >
+              {loading ? "Signing In..." : "Sign In"}
+            </button>
+
+            <div className="mt-3 flex items-center justify-between text-sm">
               <Link
                 href="/resident-recover"
-                className="mt-3 block text-left text-sm font-medium text-blue-100 hover:underline"
+                className="font-medium text-blue-100 hover:underline"
               >
                 Forgot PIN?
               </Link>
-
-              {message ? (
-                <div className="mt-3 rounded-md bg-red-50 px-4 py-3 text-left text-sm font-medium text-red-700">
-                  {message}
-                </div>
-              ) : null}
-            </div>
-
-            <div className="flex items-center justify-center">
               <Link
                 href="/register"
-                className="rounded-xl bg-[#0f6e56] px-10 py-4 text-lg font-bold text-white shadow-lg"
+                className="font-semibold text-[#FAC775] hover:underline"
               >
-                Register
+                New here? Register →
               </Link>
             </div>
+
+            {message ? (
+              <div className="mt-3 rounded-md bg-red-50 px-4 py-2 text-left text-sm font-medium text-red-700">
+                {message}
+              </div>
+            ) : null}
           </div>
         </div>
       </section>
 
+      {/* Stats Strip - unchanged */}
       <section className="relative z-10 mx-auto -mt-8 grid max-w-6xl gap-6 rounded-xl bg-white p-8 shadow-lg md:grid-cols-4">
         <div className="rounded-lg border-l-4 border-[#1e3a5f] bg-gray-50 p-5">
           <div className="mb-2 text-xs font-bold uppercase tracking-wide text-[#1e3a5f]">
@@ -172,71 +202,84 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Learn What Matters - manual scroll columns with single arrow */}
       <section className="px-8 py-20">
         <div className="mx-auto max-w-6xl">
           <h2 className="mb-14 text-center text-5xl font-semibold text-[#1e3a5f]">
             Learn What Matters
           </h2>
 
-          <div className="mb-10 grid gap-8 md:grid-cols-[1fr_auto_1fr]">
-            <div className="border-b-2 border-[#d85a30] pb-4 text-2xl font-bold text-[#1e3a5f]">
-              TIER 1 - FOUNDATIONAL
-            </div>
-            <div />
-            <div className="border-b-2 border-[#0f6e56] pb-4 text-2xl font-bold text-[#0f6e56]">
-              TIER 2 - ADVANCED
-            </div>
-          </div>
+          <div className="grid gap-6 md:grid-cols-[1fr_auto_1fr] md:items-center">
+            {/* Tier 1 column */}
+            <div>
+              <div className="mb-4 border-b-2 border-[#d85a30] pb-3 text-center text-xl font-bold tracking-wider text-[#1e3a5f]">
+                TIER 1 · FOUNDATIONAL
+              </div>
 
-          <div className="space-y-8">
-            <div className="grid items-center gap-6 md:grid-cols-[1fr_auto_1fr]">
-              <FeatureCard
-                title="Employment Readiness"
-                hours="40 hrs"
-                description="Resume writing, interviews, job search strategies, and skills assessment."
-              />
-              <ArrowCard />
-              <FeatureCard
-                title="Advanced Employment"
-                hours="60 hrs"
-                description="Barrier removal, job specialization, and career development pathways."
-                advanced
-              />
-            </div>
+              <div className="flex flex-col gap-3 overflow-y-auto pr-2" style={{ height: "480px" }}>
+                {tier1Courses.map((course, i) => (
+                  <div
+                    key={i}
+                    className="flex items-center gap-3 rounded-xl border border-gray-200 bg-white p-4 shadow-sm flex-shrink-0"
+                  >
+                    <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-[#fff1eb]">
+                      <div className="h-2 w-2 rounded-full bg-[#d85a30]" />
+                    </div>
+                    <div className="flex-1">
+                      <div className="text-sm font-bold text-[#1e3a5f]">{course.title}</div>
+                      <div className="text-xs font-semibold text-[#d85a30]">{course.hours} hrs</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
 
-            <div className="grid items-center gap-6 md:grid-cols-[1fr_auto_1fr]">
-              <FeatureCard
-                title="Financial Fundamentals"
-                hours="35 hrs"
-                description="Budgeting, credit building, and consumer protection essentials."
-              />
-              <ArrowCard />
-              <FeatureCard
-                title="Advanced Financial"
-                hours="55 hrs"
-                description="Credit independence, homeownership preparation, and wealth building."
-                advanced
-              />
+              <div className="mt-2 text-center text-xs text-gray-400">
+                Scroll to see all {tier1Courses.length} courses
+              </div>
             </div>
 
-            <div className="grid items-center gap-6 md:grid-cols-[1fr_auto_1fr]">
-              <FeatureCard
-                title="Behavioral Health Basics"
-                hours="40 hrs"
-                description="Mental health awareness, coping skills, and help-seeking resources."
-              />
-              <ArrowCard />
-              <FeatureCard
-                title="Advanced Mental Health"
-                hours="65 hrs"
-                description="Co-occurring disorders, ongoing treatment, and long-term wellness."
-                advanced
-              />
+            {/* Single arrow in the middle */}
+            <div className="flex items-center justify-center px-2">
+              <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#d85a30] shadow-lg">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                  <polyline points="12 5 19 12 12 19" />
+                </svg>
+              </div>
+            </div>
+
+            {/* Tier 2 column */}
+            <div>
+              <div className="mb-4 border-b-2 border-[#0f6e56] pb-3 text-center text-xl font-bold tracking-wider text-[#0f6e56]">
+                TIER 2 · ADVANCED
+              </div>
+
+              <div className="flex flex-col gap-3 overflow-y-auto pr-2" style={{ height: "480px" }}>
+                {tier2Courses.map((course, i) => (
+                  <div
+                    key={i}
+                    className="flex items-center gap-3 rounded-xl border border-[#7ecce5] bg-gradient-to-br from-[#c7e9f5] to-[#a8ddf1] p-4 shadow-sm flex-shrink-0"
+                  >
+                    <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-white/60">
+                      <div className="h-2 w-2 rounded-full bg-[#0f6e56]" />
+                    </div>
+                    <div className="flex-1">
+                      <div className="text-sm font-bold text-[#1e3a5f]">{course.title}</div>
+                      <div className="text-xs font-semibold text-[#0f6e56]">{course.hours} hrs</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-2 text-center text-xs text-gray-400">
+                Scroll to see all {tier2Courses.length} courses
+              </div>
             </div>
           </div>
         </div>
       </section>
 
+      {/* Closing band */}
       <section className="bg-gradient-to-br from-[#1e3a5f] to-[#2a4a7c] px-8 py-16 text-center text-white">
         <div className="mx-auto max-w-6xl">
           <h2 className="text-4xl font-bold">
@@ -253,47 +296,5 @@ export default function Home() {
         <div className="mt-2">© 2026 All rights reserved.</div>
       </footer>
     </main>
-  );
-}
-
-function FeatureCard({
-  title,
-  hours,
-  description,
-  advanced = false,
-}: {
-  title: string;
-  hours: string;
-  description: string;
-  advanced?: boolean;
-}) {
-  return (
-    <div
-      className={`rounded-xl border p-10 text-center shadow-sm transition ${
-        advanced
-          ? "border-[#7ecce5] bg-gradient-to-br from-[#c7e9f5] to-[#a8ddf1]"
-          : "border-gray-200 bg-white"
-      }`}
-    >
-      <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-xl bg-gradient-to-br from-[#0f6e56] to-[#378add] text-3xl text-white shadow-md">
-        {title.toLowerCase().includes("employment")
-          ? "💼"
-          : title.toLowerCase().includes("financial")
-          ? "💰"
-          : "🧠"}
-      </div>
-
-      <h3 className="mb-3 text-2xl font-bold text-[#1e3a5f]">{title}</h3>
-      <div className="mb-3 text-sm font-bold text-[#d85a30]">{hours}</div>
-      <p className="text-base leading-7 text-[#888780]">{description}</p>
-    </div>
-  );
-}
-
-function ArrowCard() {
-  return (
-    <div className="flex h-28 w-20 items-center justify-center rounded-xl bg-gradient-to-br from-[#d85a30] to-[#ff8a50] text-4xl font-bold text-white shadow-md">
-      →
-    </div>
   );
 }
