@@ -426,9 +426,6 @@ export default function ResidentDashboardPage() {
       </header>
 
       <div className="mx-auto max-w-7xl px-8 py-10">
-        <div className="flex gap-6">
-          <ResidentSidebar />
-          <div className="flex-1 min-w-0">
         <div className="mb-8">
           <h1 className="text-4xl font-bold text-[#1e3a5f]">
             Welcome, {data.resident.first_name}
@@ -437,6 +434,10 @@ export default function ResidentDashboardPage() {
             Register #: {data.resident.register_number}
           </p>
         </div>
+
+        <div className="grid gap-8" style={{ gridTemplateColumns: "20% 1fr" }}>
+          <ResidentSidebar />
+          <div className="min-w-0">
 
         <div className="mb-10 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
           <StatCard label="Courses Enrolled" value={computed.enrolledCount} accent="blue" />
