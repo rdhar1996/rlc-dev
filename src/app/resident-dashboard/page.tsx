@@ -439,7 +439,7 @@ export default function ResidentDashboardPage() {
           <ResidentSidebar />
           <div className="min-w-0">
 
-        <div className="mb-10 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+        <div className="mb-10 grid grid-cols-2 gap-4">
           <StatCard label="Courses Enrolled" value={computed.enrolledCount} accent="blue" />
           <StatCard label="Courses Completed" value={computed.completedCount} accent="teal" />
           <StatCard label="Certificates Earned" value={computed.certificateCount} accent="green" />
