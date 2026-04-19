@@ -435,7 +435,7 @@ export default function ResidentDashboardPage() {
           </p>
         </div>
 
-        <div className="grid gap-8" style={{ gridTemplateColumns: "20% 1fr" }}>
+        <div className="grid gap-8" style={{ gridTemplateColumns: "30% 1fr" }}>
           <ResidentSidebar />
           <div className="min-w-0">
 
